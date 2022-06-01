@@ -1,5 +1,6 @@
 import json
 import xlsxwriter
+import random
 
 passing_params = ["playerId", "teamName", "playedPositions", "positionText", "rating", "totalPassesPerGame", "accurateCrossesPerGame", "accurateCrossesPerGame", "accurateLongPassPerGame", "accurateThroughBallPerGame", "passSuccess"]
 summary_params = ["name"]
@@ -8,7 +9,7 @@ defensive_params = ["apps", "subOn", "minsPlayed", "tacklePerGame", "interceptio
 detailed_params = ["shotSixYardBox", "shotPenaltyArea", "shotOboxTotal", "shotsTotal"]
 
 player_listId = []
-count = 0
+players = 0
 row = 0
 column = 0
 
@@ -25,6 +26,7 @@ for passing_parameter in passing_params:
     row += 1
     for player_passing_parameter in list_passing:
         if passing_parameter == "playerId":
+            players += 1
             player_listId.append(player_passing_parameter[passing_parameter])
         worksheet.write(row, column, player_passing_parameter[passing_parameter])
         row += 1
@@ -101,4 +103,10 @@ for detailed_parameter in detailed_params:
 
 detailed_file.close()
 
+# ------------------VALUE------------------
+worksheet.write(row, column, "value")
+row += 1
+for player in range(players):
+    worksheet.write(row, column, round(random.uniform(0.1, 99.9), 2))
+    row += 1
 workbook.close()
